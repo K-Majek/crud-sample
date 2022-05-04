@@ -1,0 +1,38 @@
+{
+  "name": "crud",
+  "version": "1.0.0",
+  "description": "CRUD sample",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/K-Majek/code-samples.git"
+  },
+  "keywords": [
+    "CRUD",
+    "SQL",
+    "express",
+    "sample"
+  ],
+  "author": "Kamil Majek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/K-Majek/code-samples/issues"
+  },
+  "homepage": "https://github.com/K-Majek/code-samples#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "express-mysql-session": "^2.1.8",
+    "express-session": "^1.17.2",
+    "joi": "^17.6.0",
+    "mysql2": "^2.3.3",
+    "pug": "^3.0.2",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.3.0",
+    "yup": "^0.32.11"
+  }
+}
