@@ -1,7 +1,7 @@
 const request = require("supertest");
 const index = require("./index");
 const crypto = require("crypto");
-const { response } = require("./index");
+
 const {TEST_USER, TEST_PASS} = process.env;
 
 
@@ -32,7 +32,7 @@ describe("Website routes", () => {
     });    
     it("GET /items => status 200" , () => {
         return request(index)
-            .get("/items/")
+            .get("/items")
             .expect(200);
     });
     it("GET /login => status 200 || 302" , () => {
