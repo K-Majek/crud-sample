@@ -9,7 +9,7 @@ const path = require("path")
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 
-
+//create test user if doesn't exists
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -17,7 +17,4 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use("/", require("./routes/router"));
 
-
-app.listen(PORT, () => {
-    console.log(`Listening at ${DOMAIN}${["80", "3000"].includes(PORT) ? `:${PORT}`: ""}`);
-});
+module.exports = app;
