@@ -67,7 +67,7 @@ describe("User creation cycle", () => {
             .set("Cookie", cookies)
             .expect(201);
     })
-    it("Should by denied from attempting to create an account using the same data", () => {
+    it("Should be denied from attempting to create an account using the same data", () => {
         return request(index)
             .post("/register")
             .send({user, password})
