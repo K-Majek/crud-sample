@@ -1,4 +1,7 @@
-const {DB_HOST = "localhost", DB_PORT = 3306, DB_USER = "mysql", DB_PASS = "mysql"} = process.env
+const path = require("path");
+if(!process.env.NODE_ENV === "production") require("dotenv").config({path: "../.env"});
+
+const {DB_HOST, DB_PORT, DB_USER, DB_PASS} = process.env
 const mysql = require("mysql2");
 
 
@@ -12,7 +15,7 @@ exports.dbOptions = {
 const pool = mysql.createPool({
     ...exports.dbOptions, multipleStatements: true
 })
-
+exports.pool = pool;
 
 /**
  * Creates a new user.
@@ -24,7 +27,8 @@ exports.dbSetup = () => new Promise ((resolve, reject) => {
     
     if(fs.existsSync(path.join(__dirname, "..", "setup.sql"))) {
         fs.readFile(path.join(__dirname, "..", "setup.sql"), (err, query) => {
-            if(query) pool.query(query, (err, result, fields) => {
+            
+            if(query) pool.query(query.toString("utf-8"), (err, result, fields) => {
                 if(err) reject(err);
                 else resolve([result, fields]);
             })
@@ -91,7 +95,7 @@ exports.getUserByUsername = (data) => new Promise((resolve, reject) => {
  * @param {string=} data.user_id user ID string 
  * @returns {Promise<Array<import("mysql2").RowDataPacket>|Error>}
  */
-exports.searchUserByAny = (data) => new Promise((resolve, reject) => {
+exports.searchUsersByAny = (data) => new Promise((resolve, reject) => {
     const {user, user_id} = data;
     const obj = {user, user_id};
     const whereConditions = [];
@@ -158,7 +162,7 @@ exports.deleteUser = (data) => new Promise((resolve, reject) => {
 /**
  * Gets password, username and user_id.
  * @param {object} data object data
- * @param {string} data.user_id user ID string 
+ * @param {string} data.user user name 
  * @returns {Promise<Array<import("mysql2").RowDataPacket>|Error>}
  */
 exports.getAuthData  = (data) => new Promise((resolve, reject) => {
@@ -280,7 +284,7 @@ exports.getItemsByUserId = (data) => new Promise((resolve, reject) => {
  * @param {string=} data.name user ID string 
  * @returns {Promise<Array<import("mysql2").RowDataPacket>|Error>}
  */
-exports.searchUserByAny = (data) => new Promise((resolve, reject) => {
+exports.searchItemsByAny = (data) => new Promise((resolve, reject) => {
     const {user_id = "", item_id = "", name = ""} = data;
     const obj = {user_id, item_id, name};
     const whereConditions = [];
@@ -293,7 +297,7 @@ exports.searchUserByAny = (data) => new Promise((resolve, reject) => {
         }
     }
 
-    const baseQuery = `SELECT user_id, user FROM sample.users`;
+    const baseQuery = `SELECT user_id, item_id, name FROM sample.items`;
     const whereClause = `
     WHERE (
         ${whereConditions.join(" AND ")}
@@ -305,12 +309,3 @@ exports.searchUserByAny = (data) => new Promise((resolve, reject) => {
         else resolve([result, fields]);
     })
 });
-
-/**
- * Item template
- * @param {object} data object data
- * @param {string=} data.item_id item ID string
- * @param {string=} data.user_id user ID string 
- * @param {string=} data.name item name
- * @returns {Promise<Array<import("mysql2").RowDataPacket>|Error>}
- */
