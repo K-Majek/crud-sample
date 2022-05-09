@@ -2,20 +2,20 @@ const router = require("express").Router();
 const service = require("./controllers/service");
 const path = require("path");
 const html = path.join(__dirname, "..", "views", "index.html");
-
+const validation = require("../tools/validation");
 /*API*/
-router.post("/api/login", service.login);
+router.post("/api/login", validation.loginSchema, service.login);
 router.post("/api/logout", service.apiAuthGate, service.logout);
-router.post("/api/register", service.register);
+router.post("/api/register", validation.registerSchema, service.register);
 router.get("/api/getAuth", service.getAuth)
 
-router.post("/api/createItem", service.apiAuthGate, service.createItem);
-router.put("/api/updateItem", service.apiAuthGate, service.updateItem);
-router.get("/api/readItem", service.readItem);
-router.delete("/api/deleteItem", service.apiAuthGate, service.deleteItem);
+router.post("/api/createItem", service.apiAuthGate, validation.createItemSchema, service.createItem);
+router.put("/api/updateItem", service.apiAuthGate, validation.updateItemSchema, service.updateItem);
+router.get("/api/readItem", validation.readItemSchema, service.readItem);
+router.delete("/api/deleteItem", service.apiAuthGate, validation.deleteItemSchema, service.deleteItem);
 
-router.post("/api/searchItems", service.apiAuthGate, service.searchItems);
-router.post("/api/searchUsers", service.apiAuthGate, service.searchUsers);
+router.post("/api/searchItems", service.apiAuthGate, validation.searchItemsSchema, service.searchItems);
+router.post("/api/searchUsers", service.apiAuthGate, validation.searchUsersSchema, service.searchUsers);
 
 /*sites*/
 /*private*/
