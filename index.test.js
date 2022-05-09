@@ -30,11 +30,6 @@ describe("Website routes", () => {
             .get("/")
             .expect(200);
     });    
-    it("GET /items => status 200" , () => {
-        return request(index)
-            .get("/items")
-            .expect(200);
-    });
     it("GET /login => status 200 || 302" , () => {
         return request(index)
             .get("/login")
@@ -48,7 +43,15 @@ describe("Website routes", () => {
             .expect((res) => {
                 if(![200, 302].includes(res.status)) throw new Error(`Invalid status code. Expected 200, 302, got ${res.status}`)
             });
-    });    
+    });
+    it("GET /register => status 200 || 302" , () => {
+        return request(index)
+            .get("/dashboard")
+            .expect((res) => {
+                if(![200, 302].includes(res.status)) throw new Error(`Invalid status code. Expected 200, 302, got ${res.status}`)
+            });
+    });
+
     it("GET /docs => status 200" , () => {
         return request(index)
             .get("/docs")
