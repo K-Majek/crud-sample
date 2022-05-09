@@ -82,7 +82,7 @@ exports.updateItem = async (req, res, next) => {
 }
 
 exports.readItem = async (req, res, next) => {
-    const {id} = req.body;
+    const {id} = req.query;
     const [itemRows, itemFields] = await db.getItemById({item_id: id});
     res.json({itemData: itemRows.length > 0 ? itemRows[0] : []});
 }
